@@ -1,0 +1,257 @@
+// Crear o usar la base de datos
+use db_polideportivos
+
+// Crear la colección "socios"
+db.createCollection("socios")
+
+// Crear la colección "polideportivos"
+db.createCollection("polideportivos")
+
+// Crear la colección "registroEntradas"
+db.createCollection("registroEntradas")
+
+//insertar los datos (para testear)
+delete the id from the socio list
+// Insertar datos en la colección "socios"
+db.socios.insertOne({
+  nombre: "John",
+  apellido: "Doe",
+  email: "johndoe@example.com",
+  telefono: "123456789",
+  fechaNacimiento: "2003-05-24"
+})
+
+db.socios.insertOne({
+  nombre: "Jane",
+  apellido: "Smith",
+  email: "janesmith@example.com",
+  telefono: "987654321",
+  fechaNacimiento: "2002-04-22"
+})
+
+// Insertar datos en la colección "polideportivos"
+db.polideportivos.insertOne({
+  nombre: "Polideportivo A",
+  direccion: "Calle 123",
+  ciudad: "Ciudad A"
+})
+
+db.polideportivos.insertOne({
+  id: "2",
+  nombre: "Polideportivo B",
+  direccion: "Avenida XYZ",
+  ciudad: "Ciudad B"
+})
+
+// Insertar datos en la colección "registroEntradas"
+db.registroEntradas.insertOne({
+  id: "1",
+  socioId: "1",
+  polideportivoId: "1",
+  fechaHora: "2023-05-24T15:33"
+})
+
+db.registroEntradas.insertOne({
+  id: "2",
+  socioId: "2",
+  polideportivoId: "2",
+  fechaHora: "2023-05-24T14:45"
+})
+
+-----------------------------------------
+a. Obtén los socios que más acuden al polideportivo
+b. Obtén los socios que más acuden por polideportivo
+c. Obtén la media de gente que va los sábados al polideportivo (por cada
+polideportivo)
+d. Obtén los socios que han ido al polideportivo menos de 5 días al mes
+e. Obtener todas las entradas del socio a los polideportivos (se valorará filtro)
+
+---------------------------------
+socios:
+	- _id : type ObjectId
+	- nombre : type String
+	- apellido : type String
+	- email : type String
+	- telefono : type String
+	- fechaNacimiento :type String
+
+polideportivos:
+	- _id : type ObjectId
+	- nombre : type String
+	- direccion : type String
+	- ciudad : type String
+
+entradas: 
+	- _id : type ObjectId
+	- idSocio : type String
+	- idPolideportivo : type String
+	- fechaHora : type String and has format (YYYY-MM-DDTHH:MM)
+
+entradas.idSocio is the socios._id -> toString
+entradas.idPolideportivo is the polideportivos._id -> toString
+
+
+db.socios.find();
+-> {
+    "_id" : ObjectId("646f29452119fddcbdc15ae4"),
+    "nombre" : "John",
+    "apellido" : "Doe",
+    "email" : "johndoe@example.com",
+    "telefono" : "123456789",
+    "fechaNacimiento" : "2003-05-24"
+}
+{
+    "_id" : ObjectId("646f29612119fddcbdc15ae5"),
+    "nombre" : "Jane",
+    "apellido" : "Smith",
+    "email" : "janesmith@example.com",
+    "telefono" : "987654321",
+    "fechaNacimiento" : "2002-04-22"
+}
+{
+    "_id" : ObjectId("646f9454722089f97008c1c2"),
+    "nombre" : "ISSAM",
+    "apellido" : "el",
+    "email" : "elouafax@gmail.com",
+    "telefono" : "6342513132",
+    "fechaNacimiento" : "2001-05-04"
+}
+{
+    "_id" : ObjectId("647214ce08322ce01b082792"),
+    "nombre" : "user1 nombre",
+    "apellido" : "user1 apellido",
+    "email" : "user1@email",
+    "telefono" : "5326242114",
+    "fechaNacimiento" : "2023-05-11"
+}
+{
+    "_id" : ObjectId("64721501d32b4482a20884f2"),
+    "nombre" : "user2 nombre",
+    "apellido" : "user2 apellido",
+    "email" : "user@s.com",
+    "telefono" : "52623426113",
+    "fechaNacimiento" : "2015-01-20"
+}
+{
+    "_id" : ObjectId("6473583a758d9a282d0a1c95"),
+    "nombre" : "ana",
+    "apellido" : "kel",
+    "email" : "asdaasf",
+    "telefono" : "14131532324",
+    "fechaNacimiento" : "1990-10-12"
+}
+
+
+db.polideportivos.find();
+-> {
+    "_id" : ObjectId("646fb1bf16e4659b750c3183"),
+    "nombre" : "majori",
+    "direccion" : "18 altamira",
+    "ciudad" : "ordizia"
+}
+{
+    "_id" : ObjectId("646fe70eff3f4bbe0f00cba2"),
+    "nombre" : "GymBros",
+    "direccion" : "kalea 16",
+    "ciudad" : "bilbao"
+}
+{
+    "_id" : ObjectId("64721514d32b4482a20884f3"),
+    "nombre" : "gym1",
+    "direccion" : "dir1",
+    "ciudad" : "ciudad 1"
+}
+{
+    "_id" : ObjectId("6472152408322ce01b082793"),
+    "nombre" : "gym2 ",
+    "direccion" : "dir2",
+    "ciudad" : "ciudad 2"
+}
+
+
+db.entradas.find();
+-> {
+    "_id" : ObjectId("64721ca5d32b4482a20884fd"),
+    "idSocio" : "647214ce08322ce01b082792",
+    "idPolideportivo" : "6472152408322ce01b082793",
+    "fechaHora" : "2023-05-27T17:07"
+}
+{
+    "_id" : ObjectId("64721cbad32b4482a20884fe"),
+    "idSocio" : "64721501d32b4482a20884f2",
+    "idPolideportivo" : "64721514d32b4482a20884f3",
+    "fechaHora" : "2023-05-04T17:07"
+}
+{
+    "_id" : ObjectId("64722b3708322ce01b08279d"),
+    "idSocio" : "647214ce08322ce01b082792",
+    "idPolideportivo" : "6472152408322ce01b082793",
+    "fechaHora" : "2023-05-11T18:09"
+}
+{
+    "_id" : ObjectId("64722b59d32b4482a2088502"),
+    "idSocio" : "64721501d32b4482a20884f2",
+    "idPolideportivo" : "646fb1bf16e4659b750c3183",
+    "fechaHora" : "2023-05-27T18:09"
+}
+{
+    "_id" : ObjectId("64722b6c08322ce01b08279e"),
+    "idSocio" : "64721501d32b4482a20884f2",
+    "idPolideportivo" : "6472152408322ce01b082793",
+    "fechaHora" : "2023-05-17T18:10"
+}
+{
+    "_id" : ObjectId("64734c27ca6fd730bf03bb24"),
+    "idSocio" : "646f29452119fddcbdc15ae4",
+    "idPolideportivo" : "646fb1bf16e4659b750c3183",
+    "fechaHora" : "2023-05-13T14:42"
+}
+{
+    "_id" : ObjectId("64734c32758d9a282d0a1c94"),
+    "idSocio" : "646f9454722089f97008c1c2",
+    "idPolideportivo" : "64721514d32b4482a20884f3",
+    "fechaHora" : "2023-05-20T14:42"
+}
+{
+    "_id" : ObjectId("647357e1ca6fd730bf03bb25"),
+    "idSocio" : "647214ce08322ce01b082792",
+    "idPolideportivo" : "646fe70eff3f4bbe0f00cba2",
+    "fechaHora" : "2023-04-15T15:32"
+}
+{
+    "_id" : ObjectId("647357f4ca6fd730bf03bb26"),
+    "idSocio" : "646f9454722089f97008c1c2",
+    "idPolideportivo" : "6472152408322ce01b082793",
+    "fechaHora" : "2023-02-04T15:32"
+}
+{
+    "_id" : ObjectId("6473584b758d9a282d0a1c96"),
+    "idSocio" : "6473583a758d9a282d0a1c95",
+    "idPolideportivo" : "6472152408322ce01b082793",
+    "fechaHora" : "2023-07-22T15:33"
+}
+
+
+-------
+first get all the entradas that are passed in sabado with this query
+db.entradas.find({
+  fechaHora: {
+    $regex: /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2})$/,
+    $options: "m"
+  }
+}).forEach(function(doc) {
+  if (new Date(doc.fechaHora).getDay() === 6) {
+    printjson(doc);
+  }
+});
+
+make this in a function 
+then call the function and make this query to its result
+([
+  {
+    $group: {
+      _id: "$idPolideportivo",
+      count: { $sum: 1 }
+    }
+  }
+]);
