@@ -402,7 +402,8 @@ class Crud
         return $result;
     }
 
-    function getSociosMasAcudenPorPoli() {
+    function getSociosMasAcudenPorPoli()
+    {
         $pipeline = [
             [
                 '$addFields' => [
@@ -459,26 +460,80 @@ class Crud
                 ]
             ]
         ];
-        
+
         // Select the collection
         $collectionName = 'entradas';
-        
+
         // Prepare the MongoDB command
         $command = new MongoDB\Driver\Command([
             'aggregate' => $collectionName,
             'pipeline' => $pipeline,
             'cursor' => new stdClass,
         ]);
-        
+
         // Execute the aggregation query
         $cursor = $this->manager->executeCommand($this->database, $command);
-        
+
         // Fetch the result documents
         $result = [];
         foreach ($cursor as $document) {
             $result[] = $document;
         }
         return $result;
+    }
+
+    function getSocioIdoMenosCinco()
+    {
+        //devuelve los socios que han ido al polideportivo menos de 5 días al mes
+        $collection = 'entradas';
+        $pipeline = [
+            [
+                '$group' => [
+                    '_id' => [
+                        'idSocio' => '$idSocio',
+                        'idPolideportivo' => '$idPolideportivo',
+                        'month' => ['$month' => ['$toDate' => '$fechaHora']]
+                    ],
+                    'visits' => ['$sum' => 1]
+                ]
+            ],
+            [
+                '$match' => [
+                    'visits' => ['$lt' => 5]
+                ]
+            ],
+            [
+                '$group' => [
+                    '_id' => '$_id.idSocio',
+                    'polideportivos' => [
+                        '$push' => [
+                            'idPolideportivo' => '$_id.idPolideportivo',
+                            'month' => '$_id.month',
+                            'visits' => '$visits'
+                        ]
+                    ],
+                    'totalMonths' => ['$sum' => 1]
+                ]
+            ],
+            [
+                '$project' => [
+                    '_id' => 0,
+                    'idSocio' => '$_id',
+                    'polideportivos' => 1,
+                    'totalMonths' => 1
+                ]
+            ],
+        ];
+
+        $command = new MongoDB\Driver\Command([
+            'aggregate' => $collection,
+            'pipeline' => $pipeline,
+            'cursor' => new stdClass,
+        ]);
+
+        $cursor = $this->manager->executeCommand($this->database, $command);
+        $entries = $cursor->toArray();
+        return $entries;
     }
 
 

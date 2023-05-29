@@ -19,6 +19,8 @@ $resultados = $crud->getSociosMasAcudenPorPoli();
 	<a class="btn btn-primary" href="../../View/entradas/buscarSocios.php">buscarSocios</a>
 	<a class="btn btn-primary" href="../../View/entradas/buscarPolideportivos.php">buscarPolideportivos</a>
 	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcuden.php">sociosMasAcuden</a>
+    <a class="btn btn-primary" href="../../View/entradas/query4.php">query 4</a>
+
 </nav>
 
 <div class="container">
