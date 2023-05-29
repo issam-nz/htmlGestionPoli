@@ -3,9 +3,7 @@ include "entradasHead.php";
 include "../../clases/Crud.php";
 
 $crud = new Crud();
-
-// Obtener los socios que más acuden al polideportivo
-$resultados = $crud->getSociosMasAcuden();
+$polideportivos = $crud->getPolideportivos();
 
 ?>
 
@@ -18,7 +16,7 @@ $resultados = $crud->getSociosMasAcuden();
 	<a class="btn btn-primary" href="../../View/entradas/entradasByPolideportivo.php">entradasByPolideportivo</a>
 	<a class="btn btn-primary" href="../../View/entradas/entradasBySocio.php">entradasBySocio</a>
 	<a class="btn btn-primary" href="../../View/entradas/buscarSocios.php">buscarSocios</a>
-	<a class="btn btn-primary" href="../../View/entradas/buscarPolideportivos.php">buscarPolideportivos</a>
+	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcuden.php">sociosMasAcuden</a>
 	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcudenPorPoli.php">sociosMasAcudenPorPoli</a>
 </nav>
 
@@ -28,28 +26,26 @@ $resultados = $crud->getSociosMasAcuden();
 		<div class="col">
 			<div class="card mt-4">
 				<div class="card-body">
-					<h2>Cantidad de entradas por Socio</h2>
-					<hr>				
+					<h2>Buscar Polideportivo</h2>
+					<hr>
+                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                    <br>
 					<table class="table table-sm table-hover table-bordered">
 						<thead>
-							<th>Socio</th>
-							<th>Total Entradas</th>
+							<th>Nombre</th>
+							<th>Direccion</th>
+							<th>Ciudad</th>
 						</thead>
-						<tbody>
+						<tbody id="tablaPolideportivos">
 							<?php
-							foreach ($resultados as $resultado) {
-
-                                $socio = $crud->getSocio($resultado['socio']);
-								?>
+							foreach ($polideportivos as $polideportivo) {
+							?>
 								<tr>
-									<td>
-										<?php echo $socio->nombre . " " . $socio->apellido; ?>
-									</td>
-									<td>
-										<?php echo $resultado['totalEntradas']; ?>
-									</td>
+									<td><?php echo $polideportivo->nombre; ?></td>
+									<td><?php echo $polideportivo->direccion; ?></td>
+									<td><?php echo $polideportivo->ciudad; ?></td>
 								</tr>
-								<?php
+							<?php
 							}
 							?>
 						</tbody>
@@ -60,5 +56,18 @@ $resultados = $crud->getSociosMasAcuden();
 		</div>
 	</div>
 </div>
+
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tablaPolideportivos tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
 
 <?php include "entradasScripts.php"; ?>

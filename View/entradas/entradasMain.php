@@ -7,8 +7,18 @@ $entradas = $crud->getEntradas();
 
 ?>
 
-<a class="btn btn-primary" href="../../index.html">index</a>
+<nav>
+	<a class="btn btn-primary" href="../../index.html">index</a>
+	<a class="btn btn-primary" href="../../View/socios/sociosMain.php">socios</a>
+	<a class="btn btn-primary" href="../../View/polideportivos/poliMain.php">Polideportivos</a>
 
+	<a class="btn btn-primary" href="../../View/entradas/entradasByPolideportivo.php">entradasByPolideportivo</a>
+	<a class="btn btn-primary" href="../../View/entradas/entradasBySocio.php">entradasBySocio</a>
+	<a class="btn btn-primary" href="../../View/entradas/buscarSocios.php">buscarSocios</a>
+	<a class="btn btn-primary" href="../../View/entradas/buscarPolideportivos.php">buscarPolideportivos</a>
+	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcuden.php">sociosMasAcuden</a>
+	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcudenPorPoli.php">sociosMasAcudenPorPoli</a>
+</nav>
 <div class="container">
 
 	<div class="row">
@@ -61,67 +71,6 @@ $entradas = $crud->getEntradas();
 	</div>
 </div>
 
-<!-- Additional queries and visualizations -->
-
-<div class="container mt-4">
-    <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Additional Queries</h3>
-                    <hr>
-
-                    <!-- <h4>a. Obtén los socios que más acuden al polideportivo</h4>
-                    <?php
-                    // $sociosMasAcuden = $crud->getSociosMasAcudenPolideportivo();
-                    // foreach ($sociosMasAcuden as $socio) {
-                    //     echo $socio->nombre . " " . $socio->apellido . "<br>";
-                    // }
-                    ?> -->
-
-                    <h4>b. Obtén los socios que más acuden por polideportivo</h4>
-                    <?php
-                    $sociosMasAcudenPorPolideportivo = $crud->getSociosMasAcudenPorPolideportivo();
-                    foreach ($sociosMasAcudenPorPolideportivo as $polideportivo => $socios) {
-                        echo "<strong>" . $polideportivo . "</strong><br>";
-                        foreach ($socios as $socio) {
-                            echo $socio->nombre . " " . $socio->apellido . "<br>";
-                        }
-                        echo "<br>";
-                    }
-                    ?>
-
-                    <h4>c. Obtén la media de gente que va los sábados al polideportivo (por cada polideportivo)</h4>
-                    <?php
-                    $mediaGenteSabado = $crud->getMediaGenteSabadoPolideportivo();
-                    foreach ($mediaGenteSabado as $polideportivo => $media) {
-                        echo "<strong>" . $polideportivo . "</strong>: " . $media . "<br>";
-                    }
-                    ?>
-
-                    <h4>d. Obtén los socios que han ido al polideportivo menos de 5 días al mes</h4>
-                    <?php
-                    $sociosMenosCincoDiasMes = $crud->getSociosMenosCincoDiasMes();
-                    foreach ($sociosMenosCincoDiasMes as $socio) {
-                        echo $socio->nombre . " " . $socio->apellido . "<br>";
-                    }
-                    ?>
-
-                    <h4>e. Obtener todas las entradas del socio a los polideportivos (se valorará filtro)</h4>
-                    <?php
-                    // Replace "socioId" and "polideportivoId" with desired IDs for filtering
-                    $entradasSocioPolideportivo = $crud->getEntradasSocioPolideportivo($socioId, $polideportivoId);
-                    foreach ($entradasSocioPolideportivo as $entrada) {
-                        $socioNombre = $crud->getSocio($entrada->idSocio)->nombre;
-                        $polideportivoNombre = $crud->getPolideportivo($entrada->idPolideportivo)->nombre;
-                        echo "Socio: " . $socioNombre . ", Polideportivo: " . $polideportivoNombre . "<br>";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

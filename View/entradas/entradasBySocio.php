@@ -19,6 +19,18 @@ $entradas = $crud->getEntradasBySocio($idSocio);
 
 ?>
 
+<nav>
+	<a class="btn btn-primary" href="../../index.html">index</a>
+	<a class="btn btn-primary" href="../../View/socios/sociosMain.php">socios</a>
+	<a class="btn btn-primary" href="../../View/polideportivos/poliMain.php">Polideportivos</a>
+	<a class="btn btn-primary" href="../../View/entradas/entradasMain.php">Entradas</a>
+	<a class="btn btn-primary" href="../../View/entradas/entradasByPolideportivo.php">entradasByPolideportivo</a>
+	<a class="btn btn-primary" href="../../View/entradas/buscarSocios.php">buscarSocios</a>
+	<a class="btn btn-primary" href="../../View/entradas/buscarPolideportivos.php">buscarPolideportivos</a>
+	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcuden.php">sociosMasAcuden</a>
+	<a class="btn btn-primary" href="../../View/entradas/sociosMasAcudenPorPoli.php">sociosMasAcudenPorPoli</a>
+</nav>
+
 <div class="container">
 
 	<div class="row">
